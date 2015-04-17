@@ -78,6 +78,12 @@ def execute_op(host, op, op_args, outfile=None):
             if a[1].startswith("http"):
                 file_dict['data'] = a[1]
                 file_dict['filename'] = a[1].split("/")[-1]
+            else:
+                with open(a[1]) as fl:
+                    b64data = base64.b64encode(fl.read())
+                file_dict['data'] = "data:,"+ b64data
+                file_dict['filename'] = a[1].split("/")[-1]
+
 
             http_params[pname] = file_dict
 
